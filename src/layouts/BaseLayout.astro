@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 
+const SITE_URL = 'https://yap-landing-ten.vercel.app';
+
 interface Props {
   title?: string;
   description?: string;
@@ -10,6 +12,20 @@ const {
   title = 'yap — Lightweight voice-to-text for your desktop',
   description = 'Hold a key. Speak. Text appears at your cursor. Zero idle footprint.',
 } = Astro.props;
+
+// Platform-optimised copy
+const og = {
+  title:       'yap — Lightweight voice-to-text for your desktop',
+  description: 'Hold a key. Speak. Text appears at your cursor. ~5MB RAM, ~1-2s latency. Free & open source.',
+  image:       `${SITE_URL}/og-wide.png`,
+};
+
+// X/Twitter is shorter and more punchy
+const tw = {
+  title:       'yap — voice-to-text that stays out of your way',
+  description: 'Hold a key. Speak. Text appears at cursor. ~5MB RAM, ~1-2s. Zero subscriptions. Open source.',
+  image:       `${SITE_URL}/og-wide.png`,
+};
 ---
 
 <!doctype html>
@@ -20,9 +36,38 @@ const {
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <title>{title}</title>
+
+    <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/images/logomark.png" />
+
+    <!-- ── OpenGraph (Facebook · LinkedIn · WhatsApp · Telegram · Discord) ── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={SITE_URL} />
+    <meta property="og:site_name"   content="yap" />
+    <meta property="og:title"       content={og.title} />
+    <meta property="og:description" content={og.description} />
+    <meta property="og:image"       content={og.image} />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"   content="yap — Lightweight voice-to-text for your desktop" />
+    <meta property="og:locale"      content="en_US" />
+
+    <!-- ── X / Twitter Cards ─────────────────────────────────────────────── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={tw.title} />
+    <meta name="twitter:description" content={tw.description} />
+    <meta name="twitter:image"       content={tw.image} />
+    <meta name="twitter:image:alt"   content="yap — terminal-style voice-to-text tool" />
+
+    <!-- ── Discord (theme-color sets embed accent) ───────────────────────── -->
+    <meta name="theme-color" content="#52b85c" />
+
+    <!-- ── iMessage / iOS ────────────────────────────────────────────────── -->
+    <meta name="apple-mobile-web-app-title" content="yap" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
