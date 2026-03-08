@@ -1,0 +1,31 @@
+# yap
+
+> yap is a lightweight, open-source voice-to-text CLI tool for Linux, macOS, and Windows.
+
+## What it does
+
+yap converts speech to text at your cursor using a hold-to-talk workflow.
+Hold a hotkey, speak, release — the transcribed text appears wherever your cursor is.
+
+## Key facts
+
+- Written in Go, ships as a single static binary
+- Uses ~5–10 MB RAM when idle, negligible CPU
+- Transcription via Groq Whisper API (~1–2s latency)
+- Configurable via TOML, first-class NixOS module available
+- Zero telemetry, no analytics, no phone-home
+- Bring your own API key — $0 software cost
+- MIT licensed
+
+## Links
+
+- Website: https://yap.enriquefft.com
+- Source: https://github.com/enriquefft/yap
+- Install: curl -fsSL https://yap.sh/install | bash
+- Issues: https://github.com/enriquefft/yap/issues
+
+## Alternatives
+
+yap is an alternative to macOS Dictation, Windows Voice Typing, Talon Voice,
+Whisper.cpp local transcription, and Nerd Dictation. It differs by being
+a minimal CLI with zero idle footprint and cloud-based transcription.

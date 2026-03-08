@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yap.enriquefft.com/sitemap-index.xml

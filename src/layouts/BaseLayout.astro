@@ -1,7 +1,8 @@
 ---
 import '../styles/global.css';
+import { faqs } from '../data/faqs';
 
-const SITE_URL = 'https://yap-landing-ten.vercel.app';
+const SITE_URL = new URL(Astro.site ?? 'https://yap.enriquefft.com').origin;
 
 interface Props {
   title?: string;
@@ -9,22 +10,100 @@ interface Props {
 }
 
 const {
-  title = 'yap — Lightweight voice-to-text for your desktop',
-  description = 'Hold a key. Speak. Text appears at your cursor. Zero idle footprint.',
+  title = 'yap — Open-Source Voice-to-Text CLI for Linux & macOS',
+  description = 'yap is a lightweight, open-source CLI tool that converts speech to text at your cursor. Hold a key, speak, release — text appears instantly. Works on Linux, macOS, and Windows with ~5MB RAM.',
 } = Astro.props;
 
 // Platform-optimised copy
 const og = {
-  title:       'yap — Lightweight voice-to-text for your desktop',
-  description: 'Hold a key. Speak. Text appears at your cursor. ~5MB RAM, ~1-2s latency. Free & open source.',
+  title:       'yap — Open-source voice-to-text CLI for your desktop',
+  description: 'Hold a key. Speak. Text appears at your cursor. ~5MB RAM, ~1-2s latency. Free, open-source CLI for Linux, macOS & Windows.',
   image:       `${SITE_URL}/og-wide.png`,
 };
 
 // X/Twitter is shorter and more punchy
 const tw = {
-  title:       'yap — voice-to-text that stays out of your way',
-  description: 'Hold a key. Speak. Text appears at cursor. ~5MB RAM, ~1-2s. Zero subscriptions. Open source.',
+  title:       'yap — voice-to-text CLI that stays out of your way',
+  description: 'Hold a key. Speak. Text appears at cursor. ~5MB RAM, ~1-2s. Open-source CLI, zero subscriptions.',
   image:       `${SITE_URL}/og-wide.png`,
+};
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'yap',
+  description: 'Lightweight open-source voice-to-text CLI tool. Hold a hotkey, speak, and text appears at your cursor.',
+  url: SITE_URL,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Linux, macOS, Windows',
+  license: 'https://opensource.org/licenses/MIT',
+  downloadUrl: 'https://github.com/enriquefft/yap/releases',
+  author: {
+    '@type': 'Person',
+    name: 'Enrique Fernandez',
+    url: 'https://github.com/enriquefft',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  codeRepository: 'https://github.com/enriquefft/yap',
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['.speakable-definition', 'h1'],
+  },
+};
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to use yap for voice-to-text on your desktop',
+  description: 'Convert speech to text at your cursor using yap, a lightweight open-source CLI tool.',
+  totalTime: 'PT5S',
+  tool: {
+    '@type': 'HowToTool',
+    name: 'yap CLI',
+  },
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Hold your hotkey',
+      text: 'Press and hold your configured hotkey (default: Super_R) to start recording audio from your microphone.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Speak',
+      text: 'Speak naturally while holding the hotkey. yap records audio directly from your microphone.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Release the hotkey',
+      text: 'Release the hotkey to send the recorded audio to the Groq Whisper API for transcription.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 4,
+      name: 'Text appears at your cursor',
+      text: 'The transcribed text is typed at your current cursor position in ~1-2 seconds. Works in any application.',
+    },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.a,
+    },
+  })),
 };
 ---
 
@@ -35,6 +114,7 @@ const tw = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={`${SITE_URL}${Astro.url.pathname}`} />
     <title>{title}</title>
 
     <!-- Favicons -->
@@ -66,6 +146,11 @@ const tw = {
 
     <!-- ── iMessage / iOS ────────────────────────────────────────────────── -->
     <meta name="apple-mobile-web-app-title" content="yap" />
+
+    <!-- ── Structured Data (JSON-LD) ──────────────────────────────────── -->
+    <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
